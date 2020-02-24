@@ -1,4 +1,7 @@
 
+2020.02.24
+- fix: crash on Enter on empty line
+
 2019.02.03
 - fixes
 
