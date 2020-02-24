@@ -41,6 +41,7 @@ class Command:
         file_open(fn_config)
                 
     def on_key(self, ed_self, key, state):
+
         indent_size=ed_self.get_prop(PROP_INDENT_SIZE)
         if key==51:
             # hash symnol
@@ -146,6 +147,8 @@ class Command:
             # enter
             lnum=ed_self.get_carets()[0][1]# line number
             str_old=ed_self.get_text_line(lnum)
+            if not str_old: #None or empty str
+                return
             len_old=len(str_old)
             str_add_f=''
             indent=1
