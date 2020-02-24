@@ -3,7 +3,7 @@ title=Markdown Editing
 desc=Helpers for editing Markdown documents
 type=cudatext-plugin
 subdir=cuda_markdown_editing
-homepage=https://github.com/medvosa/cuda_markdown_editing
+homepage=https://github.com/CudaText-addons/cuda_markdown_editing
 
 [item1]
 section=events
