@@ -3,11 +3,9 @@ import os
 from cudatext import *
 import cudatext_cmd as cmds
 
-fn_config = os.path.join(app_path(APP_DIR_SETTINGS), 'cuda_markdown_editing.ini')#full path to config
+fn_config = os.path.join(app_path(APP_DIR_SETTINGS), 'plugins.ini')
+fn_section = 'markdown_editing'
 
-default_config_text='''[op]
-list_indent_bullets=*-+
-match_header_hashes=0'''
 def bool_to_str(v): return '1' if v else '0'
 def str_to_bool(s): return s=='1'
 
@@ -16,11 +14,12 @@ class Command:
     	pass
 
     def __init__(self):
-        
+
         self.MAX_HASHES=6
         self.DOUBLE_MAX_HASHES=self.MAX_HASHES*2
-        self.bullets=ini_read('cuda_markdown_editing.ini','op','list_indent_bullets','*+-')
-        self.match_header_hashes=str_to_bool(ini_read('cuda_markdown_editing.ini','op','match_header_hashes','0'))
+        self.bullets_=ini_read(fn_config, fn_section, 'list_indent_bullets', '*+-')
+        self.bullets=self.bullets_
+        self.match_header_hashes=str_to_bool(ini_read(fn_config, fn_section, 'match_header_hashes', '0'))
         self.need_doubling_res=self.match_header_hashes
         if self.bullets=='':
             self.bullets='*'
@@ -34,12 +33,9 @@ class Command:
         self.barr=barr
 
     def config(self):
-        def _config_exists():
-            return os.path.exists(fn_config)
-        if not _config_exists():
-            config_file = open(fn_config,'w+')
-            config_file.write(default_config_text)
-            config_file.close()
+
+        ini_write(fn_config, fn_section, 'list_indent_bullets', self.bullets_)
+        ini_write(fn_config, fn_section, 'match_header_hashes', bool_to_str(self.match_header_hashes))
         file_open(fn_config)
                 
     def on_key(self, ed_self, key, state):
