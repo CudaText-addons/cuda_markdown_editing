@@ -35,10 +35,14 @@ Headers
   - Setext headers (text with --- or === underline on the next line) - pressing Tab at the end of underline - changes underline length to match the length of header text
 
 
-Plugin has config file, which you may call via "Options / Settings-plugins / Markdown Editing / Config". Options:
+Plugin has config file, section [markdown_editing] in "plugins.ini".
+You may open config via "Options / Settings-plugins / Markdown Editing / Config".
+Options:
   - list_indent_bullets - allowed bullets (from +-*), for changing bullet kind; for ex, value "-+" means only -+ bullets
   - match_header_hashes - boolean, 0/1 - allows to mirror leading # symbols to the end of header
 
 
-Author: Medvosa, https://github.com/medvosa
+Authors:
+  Medvosa, https://github.com/medvosa
+  Alexey (CudaText)
 License: MIT
