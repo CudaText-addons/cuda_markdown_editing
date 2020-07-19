@@ -433,7 +433,7 @@ class Command:
     def menu_ref(self):
         fnd = re.findall("(^\\[.*?\\]): (http(s?):\\/\\/.*)", ed.get_text_all(), re.M)
         if not fnd:
-            return
+            return msg_status('No references found')
         items = [i[0]+': '+i[1] for i in fnd]
         res = dlg_menu(MENU_LIST, items, caption='References')
         if res is None: 
