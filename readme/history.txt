@@ -1,6 +1,7 @@
 
 2020.07.19
-+ command "Menu of references" in Plugins menu, the same as in http://www.macdrifter.com/2012/08/making-a-sublime-text-plugin-markdown-reference-viewer.html
++ command "Menu of references" in Plugins menu, to insert name of refs; the same as in http://www.macdrifter.com/2012/08/making-a-sublime-text-plugin-markdown-reference-viewer.html
+* change config to plugins.ini section [markdown_editing]
 
 2020.02.24
 - fix: crash on Enter on empty line
