@@ -1,6 +1,7 @@
-
+import re
 import os
 from cudatext import *
+import cudatext_cmd as cmds
 
 fn_config = os.path.join(app_path(APP_DIR_SETTINGS), 'cuda_markdown_editing.ini')#full path to config
 
@@ -13,6 +14,7 @@ def str_to_bool(s): return s=='1'
 class Command:
     def log(self,s):
     	pass
+
     def __init__(self):
         
         self.MAX_HASHES=6
@@ -418,6 +420,7 @@ class Command:
                 return False
         else:
             self.log(key)
+ 
     def on_insert(self, ed_self, text):
         if text in ['"',"'",# deleted hashtag symbol
         '~','*','`']:
@@ -426,3 +429,15 @@ class Command:
                 return
             x,y = ed_self.get_carets()[0][:2]
             ed_self.insert(x,y,text)
+
+    def menu_ref(self):
+        fnd = re.findall("(^\\[.*?\\]): (http(s?):\\/\\/.*)", ed.get_text_all(), re.M)
+        if not fnd:
+            return
+        items = [i[0]+': '+i[1] for i in fnd]
+        res = dlg_menu(MENU_LIST, items, caption='References')
+        if res is None: 
+            return
+        s = fnd[res][0]
+        ed.cmd(cmds.cCommand_TextInsert, s)
+        msg_status('Reference inserted')

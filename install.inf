@@ -10,6 +10,12 @@ section=events
 events=on_key,on_insert
 lexers=Markdown
 
+[item2]
+section=commands
+caption=Markdown Editing\Menu of references
+method=menu_ref
+lexers=Markdown
+
 [item6]
 section=commands
 caption=Markdown Editing\Config
