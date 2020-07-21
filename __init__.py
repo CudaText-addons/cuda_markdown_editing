@@ -427,7 +427,7 @@ class Command:
             ed_self.insert(x,y,text)
 
     def menu_ref(self):
-        fnd = re.findall("(^\\[.*?\\]): (http(s?):\\/\\/.*)", ed.get_text_all(), re.M)
+        fnd = re.findall(r"(\[.*?\]):\s+<?(https?://[^>\s\n\r]+)>?", ed.get_text_all(), re.M)
         if not fnd:
             return msg_status('No references found')
         items = [i[0]+': '+i[1] for i in fnd]
