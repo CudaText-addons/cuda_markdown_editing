@@ -44,5 +44,5 @@ Options:
 
 Authors:
   Medvosa, https://github.com/medvosa
-  Alexey (CudaText)
+  Alexey Torgashin (CudaText)
 License: MIT
