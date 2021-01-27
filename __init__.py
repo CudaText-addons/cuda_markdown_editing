@@ -20,6 +20,7 @@ class Command:
         self.bullets_=ini_read(fn_config, fn_section, 'list_indent_bullets', '*+-')
         self.bullets=self.bullets_
         self.match_header_hashes=str_to_bool(ini_read(fn_config, fn_section, 'match_header_hashes', '0'))
+        self.paired_chars=ini_read(fn_config, fn_section, 'paired_chars', '"*~`') 
         self.need_doubling_res=self.match_header_hashes
         if self.bullets=='':
             self.bullets='*'
@@ -36,6 +37,7 @@ class Command:
 
         ini_write(fn_config, fn_section, 'list_indent_bullets', self.bullets_)
         ini_write(fn_config, fn_section, 'match_header_hashes', bool_to_str(self.match_header_hashes))
+        ini_write(fn_config, fn_section, 'paired_chars', self.paired_chars) 
         file_open(fn_config)
                 
     def on_key(self, ed_self, key, state):
@@ -418,9 +420,8 @@ class Command:
             self.log(key)
  
     def on_insert(self, ed_self, text):
-        if text in ['"',"'",# deleted hashtag symbol
-        '~','*','`']:
-            self.log('dd')
+        if len(text)==1 and (text in self.paired_chars):
+            self.log('dup char')
             if text=='#' and not self.need_doubling_res:
                 return
             x,y = ed_self.get_carets()[0][:2]
