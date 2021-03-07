@@ -1,4 +1,8 @@
 
+2021.03.07
+- fix: plugin blocked multi-carets editing for some chars
+- fix: typing * at line start must not duplicate *, it's list item
+
 2021.01.27
 + add: option "paired_chars" to specify which chars are duplicated on typing
 * change: don't duplicate single quote by default (thanks @quesada)

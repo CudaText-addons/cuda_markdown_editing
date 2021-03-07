@@ -10,6 +10,8 @@ def bool_to_str(v): return '1' if v else '0'
 def str_to_bool(s): return s=='1'
 
 class Command:
+    insert_busy = False
+    
     def log(self,s):
     	pass
 
@@ -41,12 +43,16 @@ class Command:
         file_open(fn_config)
                 
     def on_key(self, ed_self, key, state):
+        carets = ed_self.get_carets()
+        #dont support multi-carets
+        if len(carets)>1: return
+        caret = carets[0]
 
         indent_size=ed_self.get_prop(PROP_INDENT_SIZE)
         if key==51:
             # hash symnol
             if 's' in state:
-                x1,y1,x2,y2=ed_self.get_carets()[0]
+                x1,y1,x2,y2=caret
                 if y2!=-1 and  x2!=-1:
                     if x2>x1:
                         x2+=1
@@ -87,7 +93,7 @@ class Command:
                             ed_self.set_caret(0,y1,len(ln),y1)
                     return False
                 else:
-                    y   = ed_self.get_carets()[0][1]
+                    y   = caret[1]
                     st  = ed_self.get_text_line(y)
                     sto = st
                     if len(st)>0:
@@ -117,7 +123,7 @@ class Command:
                 symm='~~'
             else:
                 symm='`'
-            x1,y1,x2,y2 = ed_self.get_carets()[0]
+            x1,y1,x2,y2 = caret
             if (x2<x1 and y2==y1) or y2<y1:
                 if x2!=-1 or y2!=-1:
                     x2,x1=x1,x2
@@ -145,7 +151,7 @@ class Command:
         if key==13:
             
             # enter
-            lnum=ed_self.get_carets()[0][1]# line number
+            lnum=caret[1]# line number
             str_old=ed_self.get_text_line(lnum)
             if not str_old: #None or empty str
                 return
@@ -235,7 +241,7 @@ class Command:
         if key==190:
             # > symbol
             if 's' in state:
-                x1,y1,x2,y2=ed_self.get_carets()[0]
+                x1,y1,x2,y2=caret
                 if x2==-1 and y2==-1:
                 	return True
                 if y2<y1:
@@ -245,7 +251,7 @@ class Command:
                 return False
         if key==32:
             # space
-            x,y,x1,y1 = ed_self.get_carets()[0]
+            x,y,x1,y1 = caret
         
             if x==0:
                 return
@@ -260,7 +266,7 @@ class Command:
                 ed_self.delete(x,y,x+1,y)
         if key==8:
             # backspace
-            x,y,x1,y1 = ed_self.get_carets()[0]
+            x,y,x1,y1 = caret
             subst=ed_self.get_text_substr(x-1,y,x+1,y)
             if subst in ["''" , '""' , '{}' , '[]' , '()', '**','``']:
                 ed_self.delete(x-1,y,x+1,y)
@@ -270,7 +276,7 @@ class Command:
             #tab symbol
             if not state in ('','s'):
                 return True
-            str_old_num=ed_self.get_carets()[0][1]
+            str_old_num=caret[1]
             str_old=ed_self.get_text_line(str_old_num)
             if str_old=='':
             	return True
@@ -379,7 +385,7 @@ class Command:
         elif key in (56, 106):
         # * and NumPad *
             if 's' in state:
-                x1,y1,x2,y2=ed_self.get_carets()[0]
+                x1,y1,x2,y2=caret
                 if (x2!=-1 and y2!=-1) and((x2<x1 and y2==y1) or y2<y1):
                     x1,x2=x2,x1
                     y2,y1=y1,y2
@@ -399,7 +405,7 @@ class Command:
             # _ symbol
             self.log(189)
             if 's' in state:
-                x1,y1,x2,y2=ed_self.get_carets()[0]
+                x1,y1,x2,y2=caret
                 if x2==-1 and y2==-1:
                     ed_self.insert(x1,y1,'__')
                     ed_self.set_caret(x1+1,y1)
@@ -420,12 +426,23 @@ class Command:
             self.log(key)
  
     def on_insert(self, ed_self, text):
+        if self.insert_busy: return
+        carets = ed.get_carets()
+        if len(carets)>1: return
+        x, y, x2, y2 = carets[0]
+
         if len(text)==1 and (text in self.paired_chars):
             self.log('dup char')
+            #don't work on typing header
             if text=='#' and not self.need_doubling_res:
                 return
-            x,y = ed_self.get_carets()[0][:2]
-            ed_self.insert(x,y,text)
+            #don't work on typing list-char
+            if text=='*' and (x==0):
+                return
+            self.insert_busy = True
+            ed_self.insert(x, y, text)
+            self.insert_busy = False
+            #return value None: app will enter paired char
 
     def menu_ref(self):
         fnd = re.findall(r"(\[.*?\]):\s+<?(https?://[^>\s\n\r]+)", ed.get_text_all(), re.M)
