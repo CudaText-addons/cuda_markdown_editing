@@ -1,5 +1,6 @@
 
-2021.03.07
+2021.03.08
+- fix: must delete 2 chars when BackSpace in '~|~'
 - fix: plugin blocked multi-carets editing for some chars
 - fix: typing * at line start must not duplicate *, it's list item
 
