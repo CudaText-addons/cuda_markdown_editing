@@ -183,7 +183,7 @@ class Command:
             	ed_self.insert(len(str_old),lnum,' '+'#'*resnum+'\n')
             	ed_self.set_caret(0,lnum+1)
             	return False
-            while len(str_old)>0 and (str_old[0]==' ' or str_old[0]=='\t'):
+            while len(str_old)>0 and (str_old[0] in [' ','\t']):
                 str_add_f+=str_old[0]
                 str_old=str_old[1:]
                 indent+=1
@@ -283,12 +283,12 @@ class Command:
             if 's' in state:
                 #str_old=str_old=ed_self.get_text_line(str_old_num)
         
-                if str_old[0]==' ' or str_old[0]=='\t':
+                if str_old[0] in [' ','\t']:
                     if str_old[0]==' ':
                         str_old=str_old[1:]
                     str_old=str_old[1:]
                     i=''
-                    while str_old [0] in [' ','\t']:
+                    while str_old[0] in [' ','\t']:
                         i=i+str_old[0]
                         str_old=str_old[1:]
                     sym=str_old[0]
@@ -338,7 +338,7 @@ class Command:
                         return False
             str_syms='1234567890.'
             str_indent=''
-            while len(str_old)>0 and (str_old[0]==' ' or str_old[0]=='\t'):
+            while len(str_old)>0 and (str_old[0] in [' ','\t']):
                 str_indent+=str_old[0]
                 str_old=str_old[1:]
             is_numbered=False
