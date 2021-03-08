@@ -268,7 +268,7 @@ class Command:
             # backspace
             x,y,x1,y1 = caret
             subst=ed_self.get_text_substr(x-1,y,x+1,y)
-            if subst in ["''" , '""' , '{}' , '[]' , '()', '**','``']:
+            if subst in ["''" , '""' , '{}' , '[]' , '()', '**', '``', '~~']:
                 ed_self.delete(x-1,y,x+1,y)
                 ed_self.set_caret(x-1,y)
                 return False
