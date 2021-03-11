@@ -11,9 +11,16 @@ def str_to_bool(s): return s=='1'
 
 class Command:
     insert_busy = False
-    
+
     def log(self,s):
     	pass
+
+    def is_separ_line(self, ed, y, x):
+        s = ed.get_text_line(y)
+        #s0 = ed.get_text_line(y-1) if y>0 else ''
+        return (s.startswith('---') and x>=3) or \
+               (s.startswith('- - -') and x>=5) or \
+               (s.startswith('* * *') and x>=5)
 
     def __init__(self):
 
@@ -22,7 +29,7 @@ class Command:
         self.bullets_=ini_read(fn_config, fn_section, 'list_indent_bullets', '*+-')
         self.bullets=self.bullets_
         self.match_header_hashes=str_to_bool(ini_read(fn_config, fn_section, 'match_header_hashes', '0'))
-        self.paired_chars=ini_read(fn_config, fn_section, 'paired_chars', '"*~`') 
+        self.paired_chars=ini_read(fn_config, fn_section, 'paired_chars', '"*~`')
         self.need_doubling_res=self.match_header_hashes
         if self.bullets=='':
             self.bullets='*'
@@ -39,9 +46,9 @@ class Command:
 
         ini_write(fn_config, fn_section, 'list_indent_bullets', self.bullets_)
         ini_write(fn_config, fn_section, 'match_header_hashes', bool_to_str(self.match_header_hashes))
-        ini_write(fn_config, fn_section, 'paired_chars', self.paired_chars) 
+        ini_write(fn_config, fn_section, 'paired_chars', self.paired_chars)
         file_open(fn_config)
-                
+
     def on_key(self, ed_self, key, state):
         carets = ed_self.get_carets()
         #dont support multi-carets
@@ -50,7 +57,7 @@ class Command:
 
         indent_size=ed_self.get_prop(PROP_INDENT_SIZE)
         if key==51:
-            # hash symnol
+            # hash symbol
             if 's' in state:
                 x1,y1,x2,y2=caret
                 if y2!=-1 and  x2!=-1:
@@ -133,7 +140,7 @@ class Command:
                 self.log(str(x2)+' '+str(y2))
                 if (y2>y1) or ((y2==y1) and (x2>x1)):
                     ed_self.insert(x2,y2,symm)
-                    ed_self.insert(x1,y1,symm)      
+                    ed_self.insert(x1,y1,symm)
                 else:
                     ed_self.insert(x2,y2,symm)
                     ed_self.insert(x1,y1,symm)
@@ -149,13 +156,17 @@ class Command:
                         ed_self.set_caret(x1+2,y1, x2,y2)
                 return False
         if key==13:
-            
-            # enter
-            lnum=caret[1]# line number
+            # Enter
+            lnum=caret[1] # line number
+            xnum=caret[0] # column
             str_old=ed_self.get_text_line(lnum)
             if not str_old: #None or empty str
                 return
             len_old=len(str_old)
+
+            if self.is_separ_line(ed_self, lnum, xnum):
+                return
+
             str_add_f=''
             indent=1
             if str_old[0]=='>':
@@ -252,7 +263,7 @@ class Command:
         if key==32:
             # space
             x,y,x1,y1 = caret
-        
+
             if x==0:
                 return
             strt=ed_self.get_text_substr(x-1,y,x+1,y)
@@ -282,7 +293,7 @@ class Command:
             	return True
             if 's' in state:
                 #str_old=str_old=ed_self.get_text_line(str_old_num)
-        
+
                 if str_old[0] in [' ','\t']:
                     if str_old[0]==' ':
                         str_old=str_old[1:]
@@ -309,7 +320,7 @@ class Command:
                     ed_self.set_caret(len(i)+2, str_old_num)
                 i=0
                 return False
-            
+
             if len(str_old)==0:
                 return True
             str_old=ed_self.get_text_line(str_old_num)
@@ -342,7 +353,7 @@ class Command:
                 str_indent+=str_old[0]
                 str_old=str_old[1:]
             is_numbered=False
-            if len(str_old)>0:              
+            if len(str_old)>0:
                 while str_old[0] in str_syms:
                     is_numbered=True
                     str_old=str_old[2:]
@@ -424,7 +435,7 @@ class Command:
                 return False
         else:
             self.log(key)
- 
+
     def on_insert(self, ed_self, text):
         if self.insert_busy: return
         carets = ed.get_carets()
@@ -450,7 +461,7 @@ class Command:
             return msg_status('No references found')
         items = [i[0]+': '+i[1] for i in fnd]
         res = dlg_menu(MENU_LIST, items, caption='References')
-        if res is None: 
+        if res is None:
             return
         s = fnd[res][0]
         ed.cmd(cmds.cCommand_TextInsert, s)

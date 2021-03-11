@@ -1,4 +1,7 @@
 
+2021.03.11
+- fix: Enter press after MD separator lines did break that separator lines 
+
 2021.03.08
 - fix: must delete 2 chars when BackSpace in '~|~'
 - fix: plugin blocked multi-carets editing for some chars
