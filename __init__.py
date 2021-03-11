@@ -13,7 +13,8 @@ class Command:
     insert_busy = False
 
     def log(self,s):
-    	pass
+        #print('MD:', s)
+        pass
 
     def is_separ_line(self, ed, y, x):
         s = ed.get_text_line(y)
@@ -450,6 +451,12 @@ class Command:
             #don't work on typing list-char
             if text=='*' and (x==0):
                 return
+            #don't work after triple ticks
+            if text=='`' and ed.get_text_line(y).startswith('``'):
+                if x==1:
+                    ed_self.set_caret(x+1, y, -1, -1)
+                return
+
             self.insert_busy = True
             ed_self.insert(x, y, text)
             self.insert_busy = False

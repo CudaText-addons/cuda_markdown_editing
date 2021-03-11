@@ -1,5 +1,6 @@
 
 2021.03.11
++ add: allow typing triple backticks at line start
 - fix: Enter press after MD separator lines did break that separator lines 
 
 2021.03.08
