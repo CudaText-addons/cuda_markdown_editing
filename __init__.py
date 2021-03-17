@@ -3,6 +3,9 @@ import os
 from cudatext import *
 import cudatext_cmd as cmds
 
+from cudax_lib import get_translation
+_ = get_translation(__file__)  # I18N
+
 fn_config = os.path.join(app_path(APP_DIR_SETTINGS), 'plugins.ini')
 fn_section = 'markdown_editing'
 
@@ -465,11 +468,11 @@ class Command:
     def menu_ref(self):
         fnd = re.findall(r"(\[.*?\]):\s+<?(https?://[^>\s\n\r]+)", ed.get_text_all(), re.M)
         if not fnd:
-            return msg_status('No references found')
+            return msg_status(_('No references found'))
         items = [i[0]+': '+i[1] for i in fnd]
-        res = dlg_menu(MENU_LIST, items, caption='References')
+        res = dlg_menu(MENU_LIST, items, caption=_('References'))
         if res is None:
             return
         s = fnd[res][0]
         ed.cmd(cmds.cCommand_TextInsert, s)
-        msg_status('Reference inserted')
+        msg_status(_('Reference inserted'))
