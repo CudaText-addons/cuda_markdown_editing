@@ -470,7 +470,7 @@ class Command:
         if not fnd:
             return msg_status(_('No references found'))
         items = [i[0]+': '+i[1] for i in fnd]
-        res = dlg_menu(MENU_LIST, items, caption=_('References'))
+        res = dlg_menu(DMENU_LIST, items, caption=_('References'))
         if res is None:
             return
         s = fnd[res][0]
