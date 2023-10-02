@@ -289,6 +289,8 @@ class Command:
                 return False
         if key==9:
             #tab symbol
+            if ed_self.get_prop(PROP_TAB_COLLECT_MARKERS, '') and ed_self.markers(MARKERS_GET):
+                return
             if not state in ('','s'):
                 return True
             str_old_num=caret[1]
