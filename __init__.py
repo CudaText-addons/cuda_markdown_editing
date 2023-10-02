@@ -57,11 +57,10 @@ class Command:
         carets = ed_self.get_carets()
         #dont support multi-carets
         if len(carets)>1: return
-        caret = carets[0]
 
-        indent_size=ed_self.get_prop(PROP_INDENT_SIZE)
         if key==51:
             # hash symbol
+            caret = carets[0]
             if 's' in state:
                 x1,y1,x2,y2=caret
                 if y2!=-1 and  x2!=-1:
@@ -128,12 +127,13 @@ class Command:
                         return False
                     else:
                         pass
-        if key==192:
+        elif key==192:
             # ~   simbol
             if 's' in state:
                 symm='~~'
             else:
                 symm='`'
+            caret = carets[0]
             x1,y1,x2,y2 = caret
             if (x2<x1 and y2==y1) or y2<y1:
                 if x2!=-1 or y2!=-1:
@@ -159,8 +159,9 @@ class Command:
                     else:
                         ed_self.set_caret(x1+2,y1, x2,y2)
                 return False
-        if key==13:
+        elif key==13:
             # Enter
+            caret = carets[0]
             lnum=caret[1] # line number
             xnum=caret[0] # column
             str_old=ed_self.get_text_line(lnum)
@@ -253,8 +254,9 @@ class Command:
                         ed_self.insert(car[0],car[1],'\n'+str_add_f+str(nm+1)+'. ')
                         ed_self.set_caret(len(str_add_f+str(nm+1)+'. '),car[1]+1)
                         return False
-        if key==190:
+        elif key==190:
             # > symbol
+            caret = carets[0]
             if 's' in state:
                 x1,y1,x2,y2=caret
                 if x2==-1 and y2==-1:
@@ -264,8 +266,9 @@ class Command:
                 for i in range(y1, y2+1):
                     ed_self.insert(0,i,'> ')
                 return False
-        if key==32:
+        elif key==32:
             # space
+            caret = carets[0]
             x,y,x1,y1 = caret
 
             if x==0:
@@ -279,20 +282,23 @@ class Command:
                 ed_self.delete(x,y,x+1,y)
             if strt[0:2] in ['()','[]','{}']:
                 ed_self.delete(x,y,x+1,y)
-        if key==8:
+        elif key==8:
             # backspace
+            caret = carets[0]
             x,y,x1,y1 = caret
             subst=ed_self.get_text_substr(x-1,y,x+1,y)
             if subst in ["''" , '""' , '{}' , '[]' , '()', '**', '``', '~~']:
                 ed_self.delete(x-1,y,x+1,y)
                 ed_self.set_caret(x-1,y)
                 return False
-        if key==9:
+        elif key==9:
             #tab symbol
+            caret = carets[0]
             if ed_self.get_prop(PROP_TAB_COLLECT_MARKERS, '') and ed_self.markers(MARKERS_GET):
                 return
             if not state in ('','s'):
                 return True
+            indent_size=ed_self.get_prop(PROP_INDENT_SIZE)
             str_old_num=caret[1]
             str_old=ed_self.get_text_line(str_old_num)
             if str_old=='':
@@ -401,6 +407,7 @@ class Command:
             return True
         elif key in (56, 106):
         # * and NumPad *
+            caret = carets[0]
             if 's' in state:
                 x1,y1,x2,y2=caret
                 if (x2!=-1 and y2!=-1) and((x2<x1 and y2==y1) or y2<y1):
@@ -420,6 +427,7 @@ class Command:
                 return False
         elif key==189:
             # _ symbol
+            caret = carets[0]
             self.log(189)
             if 's' in state:
                 x1,y1,x2,y2=caret
