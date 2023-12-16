@@ -53,6 +53,13 @@ class Command:
         ini_write(fn_config, fn_section, 'paired_chars', self.paired_chars)
         file_open(fn_config)
 
+        lines = [ed.get_text_line(i) for i in range(ed.get_line_count())]
+        try:
+            index = lines.index('['+fn_section+']')
+            ed.set_caret(0, index)
+        except:
+            pass
+
     def on_key(self, ed_self, key, state):
         carets = ed_self.get_carets()
         #dont support multi-carets
