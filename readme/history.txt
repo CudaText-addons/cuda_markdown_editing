@@ -1,5 +1,6 @@
 2023.12.16
-+ add: command "Confug" jumps to plugin's section
++ add: command "Config" jumps to plugin's section
+- fix: reaction to key "NumPad*" was not like to key "*"
 
 2021.03.17
 + add: i18n (from Markus)
