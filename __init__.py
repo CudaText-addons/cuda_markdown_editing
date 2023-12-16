@@ -415,23 +415,22 @@ class Command:
         elif key in (56, 106):
         # * and NumPad *
             caret = carets[0]
-            if 's' in state:
-                x1,y1,x2,y2=caret
-                if (x2!=-1 and y2!=-1) and((x2<x1 and y2==y1) or y2<y1):
-                    x1,x2=x2,x1
-                    y2,y1=y1,y2
-                if x2==-1 and y2==-1:
-                    #ed_self.insert(x1,y1,'**')
-                    self.log('h2')
-                    return True
+            x1,y1,x2,y2=caret
+            if (x2!=-1 and y2!=-1) and((x2<x1 and y2==y1) or y2<y1):
+                x1,x2=x2,x1
+                y2,y1=y1,y2
+            if x2==-1 and y2==-1:
+                #ed_self.insert(x1,y1,'**')
                 self.log('h2')
-                ed_self.insert(x2,y2,'*')
-                ed_self.insert(x1,y1,'*')
-                if y2==y1:
-                    ed_self.set_caret(x1+1,y1,x2+1,y2)
-                else:
-                    ed_self.set_caret(x1+1,y1,x2,y2)
-                return False
+                return True
+            self.log('h2')
+            ed_self.insert(x2,y2,'*')
+            ed_self.insert(x1,y1,'*')
+            if y2==y1:
+                ed_self.set_caret(x1+1,y1,x2+1,y2)
+            else:
+                ed_self.set_caret(x1+1,y1,x2,y2)
+            return False
         elif key==189:
             # _ symbol
             caret = carets[0]
