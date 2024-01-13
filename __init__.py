@@ -4,6 +4,8 @@ from cudatext import *
 import cudatext_cmd as cmds
 
 from cudax_lib import get_translation
+from .index_headers import index_headers
+
 _ = get_translation(__file__)  # I18N
 
 fn_config = os.path.join(app_path(APP_DIR_SETTINGS), 'plugins.ini')
@@ -492,3 +494,6 @@ class Command:
         s = fnd[res][0]
         ed.cmd(cmds.cCommand_TextInsert, s)
         msg_status(_('Reference inserted'))
+
+    def index_headers(self):
+        index_headers()

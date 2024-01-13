@@ -16,7 +16,13 @@ caption=Markdown Editing\Menu of references
 method=menu_ref
 lexers=Markdown
 
-[item6]
+[item3]
+section=commands
+caption=Markdown Editing\Index all headers
+method=index_headers
+lexers=Markdown
+
+[item10]
 section=commands
 caption=Markdown Editing\Config
 method=config

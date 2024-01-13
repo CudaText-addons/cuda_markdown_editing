@@ -1,3 +1,6 @@
+2024.01.12
++ add: command "Index headers", which does the same as VSCode extension "Markdown Index" (code by @SamC from CudaText forum)
+
 2023.12.16
 + add: command "Config" jumps to plugin's section
 - fix: reaction to key "NumPad*" was not like to key "*"
