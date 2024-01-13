@@ -4,6 +4,8 @@ from cudatext import *
 pattern1 = re.compile(r'^(#*) ([\d\. ]*)', 0)
 pattern2 = re.compile(r'^([\d\. ]*)', 0)
 
+treeid = app_proc(PROC_GET_CODETREE, '')
+
 def add_index(text, index):
 
     if pattern1.match(text):
@@ -15,10 +17,6 @@ def add_index(text, index):
     return newtext
 
 def index_headers():
-
-    #if ed.get_prop(PROP_LEXER_FILE)!='Markdown':
-        #return msg_status('Command is only for Markdown lexer')
-    treeid = app_proc(PROC_GET_CODETREE, '')
 
     #h1,h2,h3,h4,h5,h6 = 1,1,1,1,1,1
     for h1,item1 in enumerate(tree_proc(treeid, TREE_ITEM_ENUM_EX, id_item=0) or []):
