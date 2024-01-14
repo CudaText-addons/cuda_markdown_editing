@@ -20,10 +20,10 @@ def add_index(text, index):
     return newtext
 
 def index_headers():
-    
+
     root_items = tree_proc(treeid, TREE_ITEM_ENUM_EX, id_item=0)
     if not root_items:
-        return msg_box(_("Cannot find Code-Tree root nodes. Make sure Code-Tree is visible, it's needed for Index command."), MB_OK+MB_ICONERROR)
+        return msg_status(_("Cannot find Code-Tree items. Code-Tree is visible?"))
 
     #h1,h2,h3,h4,h5,h6 = 1,1,1,1,1,1
     for h1,item1 in enumerate(root_items):
