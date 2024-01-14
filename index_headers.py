@@ -1,5 +1,8 @@
 import re
 from cudatext import *
+from cudax_lib import get_translation
+
+_ = get_translation(__file__)  # I18N
 
 pattern1 = re.compile(r'^(#*) ([\d\. ]*)', 0)
 pattern2 = re.compile(r'^([\d\. ]*)', 0)
@@ -17,9 +20,13 @@ def add_index(text, index):
     return newtext
 
 def index_headers():
+    
+    root_items = tree_proc(treeid, TREE_ITEM_ENUM_EX, id_item=0)
+    if not root_items:
+        return msg_box(_("Cannot find Code-Tree root nodes. Make sure Code-Tree is visible, it's needed for Index command."), MB_OK+MB_ICONERROR)
 
     #h1,h2,h3,h4,h5,h6 = 1,1,1,1,1,1
-    for h1,item1 in enumerate(tree_proc(treeid, TREE_ITEM_ENUM_EX, id_item=0) or []):
+    for h1,item1 in enumerate(root_items):
         #print(item1,h1+1)
         x1,y1,x2,y2=tree_proc(treeid, TREE_ITEM_GET_RANGE, id_item=item1['id'])
         text = ed.get_text_line(y1)
