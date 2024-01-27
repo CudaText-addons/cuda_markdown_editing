@@ -10,8 +10,8 @@ Symbols *_` (asterisk, underscore, tick)
 List items (bullet symbol -+* with space)
   - if caret at the end of non-empty list item, and Enter pressed - newline is added with empty list item (on the same indent as previous item)
   - if caret at the end of empty list item, and Enter pressed - bullet is deleted and caret goes to bullet position
-  - after empty list item, and Tab pressed - list item's indent is increased, and bullet kind is changed (by loop: +-*)
-  - after empty list item, and Shift+Tab pressed - list item's indent is decreased, and bullet kind is changed
+  - after empty list item, if Tab pressed - bullet kind is changed (by loop: +-*)
+  - after _indented_ empty list item, if Shift+Tab pressed - list item's indent is decreased
 
 Tasks
   - [x] foo
