@@ -1,5 +1,6 @@
 2024.01.12
 + add: command "Index headers", which does the same as VSCode extension "Markdown Index" (code by @SamC from CudaText forum)
+- fix: disabled code which handled Tab in numbered list
 
 2023.12.16
 + add: command "Config" jumps to plugin's section
