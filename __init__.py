@@ -382,9 +382,12 @@ class Command:
                         break
             self.log('kp0')
             if is_numbered:
+                '''
                 ed_self.set_text_line(str_old_num,str_indent+' '*indent_size+'1.'+str_old)
                 ed_self.set_caret(len(ed_self.get_text_line(str_old_num)),str_old_num)
                 return False
+                '''
+                return
             #barr=['*','-','+','\\']
             def nextb(curb):
                 i=0
