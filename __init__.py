@@ -307,7 +307,13 @@ class Command:
                 return
             if not state in ('','s'):
                 return True
-            indent_size=ed_self.get_prop(PROP_INDENT_SIZE)
+
+            indent_size = ed_self.get_prop(PROP_INDENT_SIZE)
+            if indent_size<0:
+                indent_size = abs(indent_size)*ed_self.get_prop(PROP_TAB_SIZE)
+            elif indent_size==0:
+                indent_size = ed_self.get_prop(PROP_TAB_SIZE)
+
             str_old_num=caret[1]
             str_old=ed_self.get_text_line(str_old_num)
             if str_old=='':
@@ -382,11 +388,9 @@ class Command:
                         break
             self.log('kp0')
             if is_numbered:
-                '''
                 ed_self.set_text_line(str_old_num,str_indent+' '*indent_size+'1.'+str_old)
                 ed_self.set_caret(len(ed_self.get_text_line(str_old_num)),str_old_num)
                 return False
-                '''
                 return
             #barr=['*','-','+','\\']
             def nextb(curb):

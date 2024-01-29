@@ -1,3 +1,6 @@
+2024.01.29
+- fix: Tab-key handler was not considering option "indent_size" 0 or less than 0 (thanks @SamC)
+
 2024.01.12
 + add: command "Index headers", which does the same as VSCode extension "Markdown Index" (code by @SamC from CudaText forum)
 - fix: disabled code which handled Tab in numbered list
