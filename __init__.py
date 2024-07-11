@@ -504,3 +504,33 @@ class Command:
 
     def index_headers(self):
         index_headers()
+
+    def surround_star1(self):
+        self.surround('*')
+
+    def surround_star2(self):
+        self.surround('**')
+
+    def surround_star3(self):
+        self.surround('***')
+
+    def surround(self, chars):
+        carets = ed.get_carets()
+        if len(carets)>1:
+            return msg_status(_('Surround-command don\'t support multi-carets'))
+        if len(carets)==0:
+            return
+        x1, y1, x2, y2 = carets[0]
+        if y2<0:
+            return msg_status(_('Surround-command needs a selection'))
+        sel_fw = (y1, x1)>(y2, x2)
+        if sel_fw:
+            x1, y1, x2, y2 = x2, y2, x1, y1
+        ed.insert(x2, y2, chars)
+        ed.insert(x1, y1, chars)
+        new_x1 = x1+len(chars)
+        new_x2 = x2+(len(chars) if y1==y2 else 0)
+        if sel_fw:
+            ed.set_caret(new_x2, y2, new_x1, y1)
+        else:
+            ed.set_caret(new_x1, y1, new_x2, y2)
