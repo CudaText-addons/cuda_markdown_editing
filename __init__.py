@@ -262,8 +262,10 @@ class Command:
                             return False
                         nm=int(s)
                         car = ed_self.get_carets()[0]
-                        ed_self.insert(car[0],car[1],'\n'+str_add_f+str(nm+1)+'. ')
-                        ed_self.set_caret(len(str_add_f+str(nm+1)+'. '),car[1]+1)
+                        new_line = str_add_f+str(nm+1)+'. '
+                        ed_self.cmd(cmds.cCommand_KeyEnter, '')
+                        ed_self.insert(0,car[1]+1,new_line)
+                        ed_self.set_caret(len(new_line),car[1]+1)
                         return False
         elif key==190:
             # > symbol
