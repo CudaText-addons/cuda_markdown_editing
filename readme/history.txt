@@ -1,3 +1,6 @@
+2025.04.19
+- fix: if a bookmark exists on a "list item" line, and you press Enter on this line - bookmark was shifted to lower line (thanks @MiroslavMatas)
+
 2024.01.29
 - fix: Tab-key handler was not considering option "indent_size" 0 or less than 0 (thanks @SamC)
 
