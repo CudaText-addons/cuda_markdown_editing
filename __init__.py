@@ -235,9 +235,11 @@ class Command:
                     ed_self.set_caret(x-2,y)
                     return False
                 x,y = ed_self.get_carets()[0][:2]
-                ggf=(' [ ] ' if is_gfm else ' ')
-                ed_self.insert(x,y,'\n'+str_add_f+str_old[0]+ggf)
-                ed_self.set_caret(indent+len(ggf),ed_self.get_carets()[0][1]+1)
+                ggf= ' [ ] ' if is_gfm else ' '
+                new_line = str_add_f+str_old[0]+ggf
+                ed_self.cmd(cmds.cCommand_KeyEnter, '')
+                ed_self.insert(0,y+1,new_line)
+                ed_self.set_caret(len(new_line),y+1)
                 return False
             num_arr=['1','2','3','4','5','6','7','8','9','0']
             if str_old[0] in num_arr:
