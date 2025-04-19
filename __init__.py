@@ -191,7 +191,8 @@ class Command:
                         str_old=str_old[1:]
                     else:
                         break
-                ed_self.insert(len_old,lnum,'\n'+p)
+                ed_self.cmd(cmds.cCommand_KeyEnter, '')
+                ed_self.insert(0,lnum+1,p)
                 ed_self.set_caret(len(p),lnum+1)
                 return False
             if len(str_old)==0:
