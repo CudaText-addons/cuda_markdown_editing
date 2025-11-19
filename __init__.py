@@ -308,7 +308,7 @@ class Command:
         elif key==9:
             #tab symbol
             caret = carets[0]
-            if ed_self.get_prop(PROP_TAB_COLLECT_MARKERS, '') and ed_self.markers(MARKERS_GET):
+            if ed_self.get_prop(PROP_TAB_COLLECT_MARKERS, '') and ed_self.markers(MARKERS_GET_DICT):
                 return
             if not state in ('','s'):
                 return True
