@@ -42,4 +42,4 @@
 - fixes
 
 2019.01.26
-initial
+initial version
