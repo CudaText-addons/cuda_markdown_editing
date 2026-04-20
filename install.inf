@@ -24,6 +24,6 @@ lexers=Markdown
 
 [item10]
 section=commands
-caption=Markdown Editing\Config
+caption=Markdown Editing\Configure
 method=config
 menu=o

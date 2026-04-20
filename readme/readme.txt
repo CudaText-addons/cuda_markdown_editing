@@ -37,10 +37,14 @@ Headers
 
 
 Plugin has config file, section [markdown_editing] in "plugins.ini".
-You may open config via "Options / Settings-plugins / Markdown Editing / Config".
+You may open config via "Options / Settings-plugins / Markdown Editing / Configure".
 Options:
-  - list_indent_bullets - allowed bullets (from +-*), for changing bullet kind; for ex, value "-+" means only -+ bullets
-  - match_header_hashes - boolean, 0/1 - allows to mirror leading # symbols to the end of header
+
+  - "list_indent_bullets" - allowed 'list bullets' chars, from these chars: +-*.
+                            for example, value "-+" means only -+ bullets.
+  - "match_header_hashes" - boolean (0/1), allows to mirror leading # symbols to the end of the header.
+  - "paired_chars" - which chars plugin auto-pairs (option has higher priority than CudaText option "auto_close_brackets").
+                     default is: "*~`
 
 
 Authors:
