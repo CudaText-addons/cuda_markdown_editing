@@ -1,6 +1,9 @@
 Plugin for CudaText.
 Supports features during editing of Markdown documents.
 
+Features
+--------
+
 Symbols *_` (asterisk, underscore, tick)
   - auto-paired on typing
   - if they are typed with selected text, selection is enclosed in symbols pair
@@ -36,16 +39,21 @@ Headers
   - Setext headers (text with --- or === underline on the next line) - pressing Tab at the end of underline - changes underline length to match the length of header text
 
 
+Options
+-------
+
 Plugin has config file, section [markdown_editing] in "plugins.ini".
-You may open config via "Options / Settings-plugins / Markdown Editing / Configure".
+You may open this file via "Options / Settings-plugins / Markdown Editing / Configure".
 Options:
 
-  - "list_indent_bullets" - allowed 'list bullets' chars, from these chars: +-*.
-                            for example, value "-+" means only -+ bullets.
-  - "match_header_hashes" - boolean (0/1), allows to mirror leading # symbols to the end of the header.
-  - "paired_chars" - which chars plugin auto-pairs (option has higher priority than CudaText option "auto_close_brackets").
-                     default is: "*~`
+  - list_indent_bullets - allowed 'list bullets' chars, from these chars: +-*
+                          for example, value "-+" means only -+ bullets.
+  - match_header_hashes - boolean (0/1), allows to mirror leading # symbols to the end of the header.
+  - paired_chars - allowed chars to auto-pair. default is: *~`
+                   option has higher priority than CudaText option "auto_close_brackets".
 
+About
+-----
 
 Authors:
   Medvosa, https://github.com/medvosa
